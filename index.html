@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="TransformersApp">
+
+<head>
+  <meta charset="utf-8" />
+  <title>aequilibrium assigment</title>
+  <script>
+    document.write('<base href="' + document.location + '" />');
+  </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+
+  <link data-require="jasmine@*" data-semver="2.0.0" rel="stylesheet" href="//cdn.jsdelivr.net/jasmine/2.0.0/jasmine.css" />
+  <script data-require="jasmine@*" data-semver="2.0.0" src="//cdn.jsdelivr.net/jasmine/2.0.0/jasmine.js"></script>
+  <script data-require="jasmine@*" data-semver="2.0.0" src="//cdn.jsdelivr.net/jasmine/2.0.0/jasmine-html.js"></script>
+  <!--script data-require="jasmine@*" data-semver="2.0.0" src="//cdn.jsdelivr.net/jasmine/2.0.0/boot.js"></script-->
+  <script data-require="angular.js@1.4.x" src="https://code.angularjs.org/1.4.12/angular.js" data-semver="1.4.9"></script>
+  <script data-require="angular-mocks@*" data-semver="1.4.9" src="https://code.angularjs.org/1.4.12/angular-mocks.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="app.js"></script>
+  <script src="TransformerFactory.js"></script>
+  <script src="TransformerBattleService.js"></script>
+  
+</head>
+
+<body ng-controller="BattleController">
+
+  <div class="col col-lg-4">
+
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <p>Please enter the transformers that will participate on the batlle.</p>
+
+
+        <div class="col align-self-center">
+          <textarea ng-model="transformersInput" ng-list="&#10;" ng-trim="false" rows="10" cols="30"></textarea>
+          <button class="btn" ng-click="resolveBattles()">Battles</button>
+        </div>
+        <br/>
+        
+        <div>
+          <h3>Results</h3>
+          <p>{{ amountOfBattles }} {{ amountOfBattles==1 ? 'battle' : 'battles'}}</p>
+          <div ng-hide="loosingTeam == 'TIED'">
+            <p>Winning team ({{loosingTeam == "D" ? 'Autobots' : 'Decepticons'}}): {{ lastWinner.name }}</p>
+            <p>Survivors from the losing team ({{loosingTeam == "D" ? 'Decepticons' : 'Autobots'}}):
+              <span ng-repeat="transformer in remainingBots">{{ transformer.name }}. </span>
+            </p>
+          </div>
+          <div ng-show="loosingTeam == 'TIED'">
+            <p>Both teams destroyed the same number of opponents, the result is a tie.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
