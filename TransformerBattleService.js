@@ -2,10 +2,12 @@ var app = angular.module('TransformersApp');
 
 app.service("BattleRulesService", function() {
 
+  // Function for opponents run away Criteria
   function checkOpponentRunsAway(main, opponent) {
     return (main.strength - opponent.strength) >= 3 && (main.courage - opponent.courage) >= 4;
   }
-
+  
+  // Function for Optimus Prime or Predaking win criteria
   function checkLiderAutoWin(transformer) {
     var name = transformer.name;
     return angular.equals(name, "Optimus Prime") || angular.equals(name, "Predaking");
@@ -14,7 +16,8 @@ app.service("BattleRulesService", function() {
   function checkLiderFaceOff(main, opponent) {
     return checkLiderAutoWin(main) && checkLiderAutoWin(opponent);
   }
-
+  
+  // Function for face-off criteria where the game immediately ends with all competitors destroyed
   function resolveFaceOff(autobot, decepticon) {
     var winner;
     var error;
@@ -50,7 +53,7 @@ app.service("BattleRulesService", function() {
     } else if (autobot.overallRating - decepticon.overallRating > 0) {
       winner = autobot.overallRating > decepticon.overallRating ? autobot : decepticon;
 
-    } else if (autobot.overallRating - decepticon.overallRating === 0) {
+    } else if (autobot.overallRating - decepticon.overallRating === 0) { // In the event of a tie, both Transformers are destroyed
       error = {
         type: "BattleTiedException",
         title: "Simultaneous Destruction",
