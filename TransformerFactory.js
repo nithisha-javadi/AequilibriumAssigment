@@ -2,13 +2,14 @@ var app = angular.module('TransformersApp');
 
 app.factory("TransformerDecoratorFactory", function() {
 
+  // Checking whether the transformer has the criteria on their tech spec
   function performNaNValueCheck(transformer){
     var anyValueIsNan = 
         isNaN(transformer.strength) || isNaN(transformer.intelligence) || isNaN(transformer.speed) || 
         isNaN(transformer.endurance) || isNaN(transformer.rank) || isNaN(transformer.courage) || 
         isNaN(transformer.firePower) || isNaN(transformer.skill);
     
-    
+    // return Invalid Message if the input is incorrect
     if(anyValueIsNan){
       var error = {
         type: "InvalidTransformerException",
@@ -19,11 +20,13 @@ app.factory("TransformerDecoratorFactory", function() {
       throw error;
     }
   }
-
+  
+  // Spliting the string into name, team, strength etc
   function decorateTransformer(transformerString) {
     var valueArray = transformerString.split(',');
     var transformer = {};
     
+    // return Invalid Message if the input is incorrect
     if(valueArray.length < 10){
       var error = {
         type: "InvalidTransformerException",
@@ -47,7 +50,8 @@ app.factory("TransformerDecoratorFactory", function() {
     transformer.skill = Number(valueArray[9]);
     
     performNaNValueCheck(transformer);
-
+    
+    // Calculating overall rating of the transformer
     transformer.overallRating = transformer.strength + transformer.intelligence +
       transformer.speed + transformer.endurance +
       transformer.firePower;
